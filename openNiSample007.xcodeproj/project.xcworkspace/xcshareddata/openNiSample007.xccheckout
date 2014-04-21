@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FD2D55AC-FE83-4060-94C7-D462379B0FCB</string>
+	<key>IDESourceControlProjectName</key>
+	<string>openNiSample007</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>94E6328F-0BB5-4F96-8D20-30BB91F295AA</key>
+		<string>https://github.com/openFrameworksWorkshop/OFWorkshop_CV.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>myApps/examples/opeNI-SimpleExamples/openNiSample007.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>94E6328F-0BB5-4F96-8D20-30BB91F295AA</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/openFrameworksWorkshop/OFWorkshop_CV.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>94E6328F-0BB5-4F96-8D20-30BB91F295AA</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>94E6328F-0BB5-4F96-8D20-30BB91F295AA</string>
+			<key>IDESourceControlWCCName</key>
+			<string>apps</string>
+		</dict>
+	</array>
+</dict>
+</plist>
