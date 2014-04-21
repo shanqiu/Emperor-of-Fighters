@@ -41,6 +41,9 @@ void testApp::setup() {
     time=0;
     p1_1_speed=0;
     p1_1_ballrad=0;
+    
+    p1_health=20;
+    p2_health=20;
 }
 
 //--------------------------------------------------------------
@@ -214,6 +217,10 @@ void testApp::draw(){
         if(left_hand.x<left_shoulder.x && right_hand.x<left_shoulder.x && left_hand.y>right_shoulder.y && right_hand.y>right_shoulder.y && p1_1_isthrow==false){
             p1_1_issaving=true;
         }
+        else{
+            p1_1_issaving=false;
+            //p1_1_ballrad=0;
+        }
         
         
         if(diff_left_hand<-100 ){
@@ -283,7 +290,7 @@ void testApp::draw(){
         
         
         //p1 b
-        if(((head.y<right_hand.y && right_hand.y<right_shoulder.y && right_hand.x>head.x)||(head.y<left_hand.y  && left_hand.y<right_shoulder.y && left_hand.x>head.x)) && p1_1_isthrow==false && p1_2_isthrow==false){
+        if(((head.y>right_hand.y && head.y<right_elbow.y && right_hand.x>head.x)||(head.y>left_hand.y  && head.y<left_elbow.y && left_hand.x>head.x)) && p1_1_isthrow==false && p1_2_isthrow==false){
             p1_block=true;
             ofSetColor(0, 255, 0);
             ofRect(right_elbow.x,right_hand.y,20,200);
@@ -307,6 +314,12 @@ void testApp::draw(){
     
 //  if two player
     else if(numUsers==2){
+        
+        
+        
+        
+        
+        
         
         ofxOpenNIUser & user = openNIDevice.getTrackedUser(0);
         
@@ -393,6 +406,14 @@ void testApp::draw(){
         
         
         if(head.x>p2_head.x){ //if p1 is on the right
+            
+            
+            
+            ofSetColor(255, 0, 0);
+            ofRect(10, 10, p2_health*15, 20);
+            ofRect(340, 10, p1_health*15, 20);
+            
+            
         
         float diff_left_hand=prev_left_hand.x-left_hand.x;
         float diff_right_hand=prev_right_hand.x-right_hand.x;
@@ -401,8 +422,12 @@ void testApp::draw(){
 if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>right_shoulder.y && right_hand.y>right_shoulder.y && p1_1_isthrow==false){
             p1_1_issaving=true;
         }
+else{
+    p1_1_issaving=false;
+   // p1_1_ballrad=0;
+}
         
-        
+    
         if(diff_left_hand>100 ){
             p1_1_isthrow=true;
             p1_1_issaving=false;
@@ -427,6 +452,11 @@ if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>
             p1_1_ballposx-=p1_1_speed;
             p1_1_speed=p1_1_speed*0.95;
             if(p1_1_ballposx<0){
+                p1_1_isthrow=false;
+                p1_1_ballrad=0;
+            }
+            
+            if(p2_block==true && (p1_1_ballposx < p2_right_elbow.x) && p1_1_ballrad<90){
                 p1_1_isthrow=false;
                 p1_1_ballrad=0;
             }
@@ -463,24 +493,64 @@ if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>
             p1_2_ballrad=50;
             
             ofRect(p1_2_ballposx, p1_2_ballposy, p1_2_ballrad, p1_2_ballrad);
-            if(p1_2_ballposx<0){
+            if(p1_2_ballposx<0 || p1_2_speed<0.2){
+                p1_2_isthrow=false;
+            }
+            if(p2_block==true && p1_2_ballposx < p2_right_elbow.x){
                 p1_2_isthrow=false;
             }
         }
         
         
         //p1 b
-            if(((head.y<right_hand.y && right_hand.y<right_shoulder.y && right_hand.x<head.x)||(head.y<left_hand.y  && left_hand.y<right_shoulder.y && left_hand.x<head.x)) && p1_1_isthrow==false && p1_2_isthrow==false){
+            if(((head.y>right_hand.y && head.y<right_elbow.y && right_hand.x<head.x)||(head.y>left_hand.y  && head.y<left_elbow.y && left_hand.x<head.x)) && p1_1_isthrow==false && p1_2_isthrow==false){
                 p1_block=true;
                 ofSetColor(0, 255, 0);
+                
+                if(p2_1_isthrow==true && p2_1_ballposx>=90 && (p2_1_ballposx>left_elbow.x)){
+                }
+                else{
                 ofRect(left_elbow.x,left_hand.y,20,200);
+                }
                 p1_1_issaving=false;
-                p1_1_ballrad=0;
+                //p1_1_ballrad=0;
 
 
         }
         else{p1_block=false;}
         
+            
+            //p1 is hit
+            if(p2_1_isthrow==true && p2_1_ballposx>head.x){
+                count1_1++;
+            }
+            else{count1_1=0;}
+            
+            if(p2_2_isthrow==true && p2_2_ballposx>head.x){
+                count1_2++;
+            }
+            else{count1_2=0;}
+          
+            
+            if(count1_1==1){
+                if(p1_1_ballrad!=0){
+                    p1_1_ballrad=0;
+                }
+                if ( p2_1_ballrad>0 && p2_1_ballrad<50){
+                    p1_health-=1;
+                }
+                else if (p2_1_ballrad>=50){
+                    p1_health-=3;
+                }
+            }
+            else if(count1_2==1){
+                if(p1_1_ballrad!=0){
+                    p1_1_ballrad=0;
+                }
+                p1_health-=1;
+            }
+
+            
             
             
             
@@ -490,9 +560,13 @@ if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>
             float p2_diff_left_hand=p2_prev_left_hand.x-p2_left_hand.x;
             float p2_diff_right_hand=p2_prev_right_hand.x-p2_right_hand.x;
             
-            //p1 1
+            //p2 1
             if(p2_left_hand.x<p2_left_shoulder.x && p2_right_hand.x<p2_left_shoulder.x && p2_left_hand.y>p2_right_shoulder.y && p2_right_hand.y>p2_right_shoulder.y && p2_1_isthrow==false){
                 p2_1_issaving=true;
+            }
+            else{
+                p2_1_issaving=false;
+                //p2_1_ballrad=0;
             }
             
             
@@ -523,7 +597,10 @@ if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>
                     p2_1_isthrow=false;
                     p2_1_ballrad=0;
                 }
-                
+                if(p1_block==true && p2_1_ballposx > left_elbow.x && p2_1_ballrad<90){
+                    p2_1_isthrow=false;
+                    p2_1_ballrad=0;
+                }
                 
             }
             
@@ -539,7 +616,7 @@ if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>
             float p2_diff_left_foot=p2_prev_left_foot.x-p2_left_foot.x;
             float p2_diff_right_foot=p2_prev_right_foot.x-p2_right_foot.x;
             
-            //p1 2
+            //p2 2
             
             if(p2_right_foot.y<p2_right_knee.y  && p2_diff_right_foot<0){
                 //ofRect(20, 20, 90, 90);
@@ -556,19 +633,26 @@ if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>
                 p2_2_ballrad=50;
                 
                 ofRect(p2_2_ballposx, p2_2_ballposy, p2_2_ballrad, p2_2_ballrad);
-                if(p2_2_ballposx>640){
+                if(p2_2_ballposx>640 || p2_2_speed>-0.2){
+                    p2_2_isthrow=false;
+                }
+                if(p1_block==true && p2_2_ballposx > left_elbow.x){
                     p2_2_isthrow=false;
                 }
             }
             
             
-            //p1 b
-            if(((p2_head.y<p2_right_hand.y && p2_right_hand.y<p2_right_shoulder.y && p2_right_hand.x>p2_head.x)||(p2_head.y<p2_left_hand.y  && p2_left_hand.y<p2_right_shoulder.y && p2_left_hand.x>p2_head.x)) && p2_1_isthrow==false && p2_2_isthrow==false){
+            //p2 b
+            if(((p2_head.y>p2_right_hand.y && p2_right_elbow.y>p2_head.y && p2_right_hand.x>p2_head.x)||(p2_head.y>p2_left_hand.y  && p2_left_elbow.y>p2_head.y && p2_left_hand.x>p2_head.x)) && p2_1_isthrow==false && p2_2_isthrow==false){
                 p2_block=true;
                 ofSetColor(255, 255, 0);
+                if(p1_1_isthrow==true && p1_1_ballposx>=90 && p1_1_ballposx>p2_right_elbow.x){
+                }
+                else{
                 ofRect(p2_right_elbow.x,p2_right_hand.y,20,200);
+                }
                 p2_1_issaving=false;
-                p2_1_ballrad=0;
+               // p2_1_ballrad=0;
                 
             }
             else{
@@ -579,6 +663,30 @@ if(left_hand.x>right_shoulder.x && right_hand.x>right_shoulder.x && left_hand.y>
             
             
             
+            
+            //p2 is hit
+            if(p1_1_isthrow==true && p1_1_ballposx<p2_head.x){
+                count2_1++;
+            }
+            else{count1_1=0;}
+            
+            if(p1_2_isthrow==true && p1_2_ballposx<p2_head.x){
+                count2_2++;
+            }
+            else{count2_2=0;}
+            
+            
+            if(count2_1==1){
+                if (p1_1_ballrad>0 && p1_1_ballrad<50){
+                    p2_health-=1;
+                }
+                else if (p1_1_ballrad>=50){
+                    p2_health-=3;
+                }
+            }
+            else if(count2_2==1){
+                p2_health-=1;
+            }
             
             
     }

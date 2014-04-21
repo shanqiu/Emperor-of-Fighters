@@ -63,7 +63,20 @@ public:
     
     
 
-    int time;
+    int time=0;
+    int time2=0;
+    int count1_1=0;
+    int count1_2=0;
+    int count2_2=0;
+    int count2_1=0;
+    
+    bool p1_win=false;
+    bool p2_win=false;
+    
+    int p1_health;
+    int p2_health;
+    bool p1_is_hit;
+    bool p2_is_hit;
     int p1_1_speed;
     bool p1_1_isthrow;
     bool p1_1_issaving;
